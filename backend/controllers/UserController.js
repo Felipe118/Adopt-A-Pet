@@ -1,5 +1,6 @@
 const User = require("../models/User.js")
 const bcrypt = require("bcrypt")
+const createUserToken = require("../helpers/create-user-token.js")
 
 module.exports = class UserController{
     static async register(req,res){
@@ -57,14 +58,44 @@ module.exports = class UserController{
 
         try{
             const newUser = await user.save()
-            res.status(201).json({
-                message: "Usuário criado",
-                newUser
-            })
+           await createUserToken(newUser, req,res)
 
         }catch(error){
             res.status(500).json({message: error})
         }
+
+    }
+
+    static async login(req,res){
+        const {email,password} = req.body
+
+        if(!email || !password){
+            res.status(422).json({message: 'O email e senha são obrigatórios'})
+            return
+        }
+
+         //check if user exists
+         const userExists = await User.findOne({email: email})
+         if(!userExists){
+             res.status(422).json({
+                 message: "Usuário não cadastrado"
+             })
+             return
+         }
+
+         //che if match with db password
+         const checkPassword = await bcrypt.compare(password, user.password)
+
+         if(!checkPassword){
+            res.status(422).json({
+                message: "Senha Inválida!"
+            })
+            return
+         }
+         await createUserToken(user, req,res)
+
+
+
 
     }
 }
