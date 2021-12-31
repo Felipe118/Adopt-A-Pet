@@ -1,6 +1,11 @@
 const User = require("../models/User.js")
 const bcrypt = require("bcrypt")
-const createUserToken = require("../helpers/create-user-token.js")
+const jwt = require("jsonwebtoken")
+
+//helpers
+const getToken = require("../helpers/get-token.js");
+const createUserToken = require("../helpers/create-user-token.js");
+const { findById } = require("../models/User.js");
 
 module.exports = class UserController{
     static async register(req,res){
@@ -93,9 +98,43 @@ module.exports = class UserController{
             return
          }
          await createUserToken(user, req,res)
+    }
+    static async checkUser(req,res){
+        let currentUser
+        console.log(req.headers.authorization)
+        if(req.headers.authorization){
+            const token = getToken(req)
+            const decoded = jwt.verify(token, 'nossosecret')
 
+            currentUser = await User.findById(decoded.id)
+            
+            currentUser.password = undefined
+        }else{
+            correntUser = null
+        }
 
+        res.status(200).send(currentUser)
+    }
 
+    static async getUserById(req,res)
+    {
+        const id = req.params.id
 
+        const user = await User.findById(id).select("-password")
+
+        if(!user){
+            res.status(422).json({
+                message: 'Usuário Não encontrado'
+            })
+            return
+        }
+        res.status(200).json({user})
+    }
+    static async editUser(req,res)
+    {
+        res.status(200).json({
+            message: 'Update feito com sucesso'
+        })
+        return
     }
 }
