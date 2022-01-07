@@ -5,7 +5,7 @@ const checkToken = (req,res,next) => {
     console.log(req.headers)
     if(!req.headers.authorization){
         return res.status(401).json({
-            message: 'Acesso Negaddsdo!'
+            message: 'Acesso Negado!'
         })
     }
 

@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken")
 //helpers
 const getToken = require("../helpers/get-token.js");
 const createUserToken = require("../helpers/create-user-token.js");
-const getUserByToken = require("../helpers/get-user-by-token.js")
+const getUserByToken = require("../helpers/get-user-by-token.js");
+const { findOneAndUpdate } = require("../models/User.js");
 
 
 module.exports = class UserController{
@@ -146,8 +147,16 @@ module.exports = class UserController{
             return
         }
 
-        const {name,email,phone,password,confirmpassword} = req.body
+        const name = req.body.name
+        const email = req.body.email
+        const phone = req.body.phone
+        const password = req.body.password
+        const confirmpassword = req.body.confirmpassword
          let image = ''
+
+         if(req.file){
+             user.image = req.file.filename
+         }
 
          //validations
 
@@ -155,6 +164,8 @@ module.exports = class UserController{
             res.status(422).json({message: 'O nome é obrigatório'})
             return
        }
+       user.name = name
+
        if(!email){
         res.status(422).json({message: 'O email é obrigatório'})
         return
@@ -174,22 +185,35 @@ module.exports = class UserController{
             res.status(422).json({message: 'O phone é obrigatório'})
             return
        }
-       if(!password){
-        res.status(422).json({message: 'A senha é obrigatório'})
+       user.phone = phone
+
+      if(password != confirmpassword){
+        res.status(422).json({message: 'As senhas não conferem!'})
         return
-        }
-        if(!confirmpassword){
-            res.status(422).json({message: 'A confirmação de senha é obrigatório'})
-            return
-         }
-
-
+      }else if(password === confirmpassword && password != null ){
       
+         //create password
+         const salt = await bcrypt.genSalt(12)
+         const passwordHash = await bcrypt.hash(password,salt) 
 
-       
+         user.password = passwordHash
+      }
 
-        
+      try {
 
+        const UpdateUser = await User.findByIdAndUpdate(
+            {_id:user._id},
+            {$set:user},
+            {new: true}
 
+        )
+
+        res.status(200).json({message: 'Usuário atualizado com sucesso! '})
+          
+      } catch (error) {
+         res.status(500).json({message:error})
+         return
+      }
+      console.log(user)
     }
 }
