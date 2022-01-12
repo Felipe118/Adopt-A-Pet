@@ -7,6 +7,8 @@ module.exports = class PetController{
 
     static async create(req,res){
         const {name,age,weight,color} = req.body
+        const images = req.files
+
         const available = true
 
 
@@ -25,6 +27,10 @@ module.exports = class PetController{
         }
         if(!color){
             res.status(422).json({message: "A cor  é obrigatório"})
+            return
+        }
+        if(images.length === 0){
+            res.status(422).json({message: "A imagem  é obrigatório"})
             return
         }
         //dono do pet
@@ -46,6 +52,10 @@ module.exports = class PetController{
              phone: user.phone,
             },
         })
+
+        images.map((image) => {
+            pet.images.push(image.filename)
+        })
      
 
         try {
@@ -63,5 +73,23 @@ module.exports = class PetController{
         
 
        
+    }
+
+    static async getAll(req,res){
+        const pets = await Pet.find().sort('-createdAt')
+
+        res.status(200).json({
+            pets: pets,
+        })
+    }
+
+    static async getAllUserPets(req,res){
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+
+        const pets = await Pet.find({'user._id':user._id}).sort('-createdAt')
+        res.status(200).json({
+            pets,
+        })
     }
 }
