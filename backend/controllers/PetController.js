@@ -277,12 +277,18 @@ module.exports = class PetController{
             return
             }
             
-        if(pet.user._id.toString() !== user._id.toString()){
-            res.status(422).json({message: "Houve um problema em processar sua solicitação"})
-            return
-        }
+            if(pet.user._id.toString() !== user._id.toString()){
+                res.status(422).json({message: "Houve um problema em processar sua solicitação"})
+                return
+            }
 
             pet.available = false
+
+            await Pet.findByIdAndUpdate(id,pet)
+
+            res.status(200).json({
+                message: 'Parabens o ciclo de adoção foi finalizado com sucesso'
+            })
 
 
 
