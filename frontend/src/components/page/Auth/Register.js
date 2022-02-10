@@ -1,15 +1,19 @@
 import Input from '../../form/input'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 //css
 
 import style from '../../form/Form.module.css'
 
+//context
+import { Context } from '../../../context/UserContext'
+
 
 function Register() {
 
     const [user,setUser] = useState({})
+    const {register} = useContext(Context)
 
     function handleChange(e) {
         setUser({...user, [e.target.name]: e.target.value})
@@ -21,6 +25,7 @@ function Register() {
         e.preventDefault()
 
         //enviar um usuário para o banco
+        register(user)
 
     }
 
