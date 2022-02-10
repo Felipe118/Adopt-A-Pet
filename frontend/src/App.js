@@ -9,9 +9,13 @@ import Login from './components/page/Auth/Login'
 import Register from './components/page/Auth/Register'
 import Home from './components/page/Home'
 
+//context
+import { UserProvider  } from '../context/UserContext'
+
 function App() {
   return (
     <Router>
+      <UserProvider>
       <Navbar/>
         <Container>
         <Routes>
@@ -21,6 +25,7 @@ function App() {
         </Routes>
         </Container>
       <Footer/>
+      </UserProvider>
     </Router>
    
   );
