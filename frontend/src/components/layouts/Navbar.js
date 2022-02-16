@@ -1,6 +1,11 @@
+import { useContext } from 'react'
 import {Link} from 'react-router-dom'
 
+
 import Logo from '../../assets/img/logo.png'
+
+//context
+import { Context } from '../../context/UserContext'
 
 
 //css
@@ -8,6 +13,7 @@ import styles from './Navbar.module.css'
 
 
 function Navbar() {
+    const {authenticated} = useContext(Context)
     return (
         <nav className={styles.navbar}>
         <div className={styles.navbar_logo}>
@@ -17,12 +23,19 @@ function Navbar() {
             <li className={styles.navbar}>
                 <Link to='/'>Adotar</Link>
             </li>
-            <li className={styles.navbar}>
-                <Link to='/login'>Entrar</Link>
-            </li>
-            <li className={styles.navbar}>
-                <Link to='/register'>Cadastrar</Link>
-            </li>
+            {
+                authenticated ? (<><p>Logado</p></>) : (<>
+                 <li className={styles.navbar}>
+                    <Link to='/login'>Entrar</Link>
+                </li>
+                <li className={styles.navbar}>
+                    <Link to='/register'>Cadastrar</Link>
+                </li>
+                </>) 
+
+
+            }
+           
         </ul>
         </nav>
     )
