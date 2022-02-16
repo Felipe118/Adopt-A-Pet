@@ -44,6 +44,14 @@ export default function useAuth(){
         localStorage.setItem('token',JSON.stringify(data.token))
         navigate('/')
     }
+
+    function logout(){
+        const msgtext = 'Logout realizado com sucesso'
+        const msgType = 'sucess'
+
+        setAuthenticated(false)
+        localStorage.removeItem('token')
+    }
     return { authenticated,register }
 }
 
