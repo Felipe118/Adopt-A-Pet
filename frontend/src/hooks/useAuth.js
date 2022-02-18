@@ -22,7 +22,7 @@ export default function useAuth(){
     async function register(user){
 
         let msgText = 'Cadastro realizado com sucesso!'
-        let msgType = 'sucess'
+        let msgType = 'success'
 
         try {
             const data = await api.post('/users/register', user)
@@ -30,7 +30,30 @@ export default function useAuth(){
                 return response.data
             })
 
-        console.log(data)
+        await  authUser(data)
+        } catch (error) {
+             msgText = error.response.data.message
+             msgType = 'error'
+        }
+
+        
+    }
+
+ 
+
+    async function login(user){
+        let msgText = 'Login realizado com sucesso'
+        let msgType = 'success'
+
+        try {
+
+            const data = await api.post('/users/login',user)
+            .then((response) => {
+                return response.data
+            })
+
+           authUser(data)
+            
         } catch (error) {
              msgText = error.response.data.message
              msgType = 'error'
@@ -47,11 +70,15 @@ export default function useAuth(){
 
     function logout(){
         const msgtext = 'Logout realizado com sucesso'
-        const msgType = 'sucess'
+        const msgType = 'success'
 
         setAuthenticated(false)
         localStorage.removeItem('token')
+        api.defaults.headers.Authorization = undefined
+        navigate('/')
+
+        setFlashMessage(msgtext,msgType)
     }
-    return { authenticated,register }
+    return { authenticated,register,logout,login }
 }
 

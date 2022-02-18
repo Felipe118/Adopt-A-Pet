@@ -13,7 +13,7 @@ import styles from './Navbar.module.css'
 
 
 function Navbar() {
-    const {authenticated} = useContext(Context)
+    const {authenticated,logout} = useContext(Context)
     return (
         <nav className={styles.navbar}>
         <div className={styles.navbar_logo}>
@@ -24,7 +24,11 @@ function Navbar() {
                 <Link to='/'>Adotar</Link>
             </li>
             {
-                authenticated ? (<><p>Logado</p></>) : (<>
+                authenticated ? (
+                <>
+                    <li onClick={logout} className={styles.navbar}>Sair</li>
+                </>
+                ) : (<>
                  <li className={styles.navbar}>
                     <Link to='/login'>Entrar</Link>
                 </li>

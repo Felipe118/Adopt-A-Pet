@@ -82,8 +82,9 @@ module.exports = class UserController{
         }
 
          //check if user exists
-         const userExists = await User.findOne({email: email})
-         if(!userExists){
+         const user = await User.findOne({email: email})
+         
+         if(!user){
              res.status(422).json({
                  message: "Usuário não cadastrado"
              })
