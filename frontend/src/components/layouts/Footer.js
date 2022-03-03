@@ -7,7 +7,7 @@ function Footer() {
             <p>
                 <span className="bold"> 
                     Adopt a Pet
-                </span> &copy; 2021
+                </span> &copy; 2022
             </p>
         </footer>
     )
