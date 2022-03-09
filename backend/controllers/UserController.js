@@ -113,7 +113,7 @@ module.exports = class UserController{
             
             currentUser.password = undefined
         }else{
-            correntUser = null
+            currentUser = null
         }
 
         res.status(200).send(currentUser)
@@ -140,6 +140,7 @@ module.exports = class UserController{
         const token = getToken(req)
 
         const user = await getUserByToken(token)
+        console.log(user)
 
         if(!user){
             res.status(422).json({
