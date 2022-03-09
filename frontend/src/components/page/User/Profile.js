@@ -6,7 +6,7 @@ import styles from "./Profile.module.css"
 
 import useFlashMessage from '../../../hooks/useFlashMessage'
 import Input from '../../form/input'
-import { UserProvider } from '../../../context/UserContext'
+
 
 
 
@@ -34,33 +34,33 @@ function Profile() {
       setUser({...user, [e.target.name]: e.target.files[0]})
     }
 
-    // async function handleSubmit(e){
-    //   e.preventDefault()
+    async function handleSubmit(e){
+      e.preventDefault()
      
-    //   let msgType = 'success'
+      let msgType = 'success'
 
-    //   const formData = new FormData()
-    //   const userFormData = await Object.keys(user).forEach((key) => 
-    //     formData.append(key,user[key]),
-    //   )
-    //   formData.append('user', userFormData)
+      const formData = new FormData()
+      const userFormData = await Object.keys(user).forEach((key) => 
+        formData.append(key,user[key]),
+      )
+      formData.append('user', userFormData)
 
-    //   const data = await api.patch(`users/edit/${user._id, formData}`, {
-    //     headers: {
-    //       Authorization: `Bearer ${JSON.parse(token)}`,
-    //       'Content-Type': 'multipart/form-data'
-    //     }
-    //   }).then((response) => {
-    //     return response.data
+      const data = await api.patch(`/users/edit/${user._id, formData}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((response) => {
+        return response.data
 
-    //   }).catch((erro) => {
-    //     msgType = 'error'
-    //     return erro.response.data
-    //   })
+      }).catch((erro) => {
+        msgType = 'error'
+        return erro.response.data
+      })
 
-    //   setFlashMessage(data.message, msgType)
+      setFlashMessage(data.message, msgType)
 
-    // }
+    }
 
     return (
         
@@ -70,7 +70,7 @@ function Profile() {
                 <p>Previe Image</p>
             </div>
             
-            <form  className={formStyles.form_container}>
+            <form onSubmit={handleSubmit} className={formStyles.form_container}>
                 <Input 
                   text="imagem"
                   type="file"
@@ -93,7 +93,7 @@ function Profile() {
                    name="name"
                    placeholder="Digite seu nome"
                    handleOnChange={handleChange}
-                   value={user.email || ''}
+                   value={user.name || ''}
                 />
 
                   <Input 
@@ -102,7 +102,7 @@ function Profile() {
                    name="phone"
                    placeholder="Digite seu telefone"
                    handleOnChange={handleChange}
-                   value={user.email || ''}
+                   value={user.phone || ''}
                 />
 
                   <Input 
@@ -111,7 +111,7 @@ function Profile() {
                    name="password"
                    placeholder="Digite sua senha"
                    handleOnChange={handleChange}
-                   value={user.email || ''}
+                   value={user.password || ''}
                 />
 
                   <Input 
