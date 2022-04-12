@@ -35,14 +35,14 @@ $ npm install
 # Front-End 
 ### Status
  <h4 align="center"> 
-	🚧  ... Desapegax está 🚀 Em construção...  🚧
+	🚧  ... o Front-End está 🚀 Em construção...  🚧
 </h4>
 
 
-# Execute a aplicação em modo de desenvolvimento
-$ npm start
+% # Execute a aplicação em modo de desenvolvimento
 
-# O servidor inciará na porta:5000 - acesse <http://localhost:5000>
+
+% # O servidor inciará na porta:5000 - acesse <http://localhost:5000>
 
 ### 🛠 Tecnologias
 
