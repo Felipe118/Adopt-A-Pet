@@ -5,6 +5,7 @@ import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
 import Container from './components/layouts/Container'
 import Message  from './components/layouts/Message'
+import MyPets from './components/page/Pet/MyPets'
 //pages
 import Login from './components/page/Auth/Login'
 import Register from './components/page/Auth/Register'
@@ -13,6 +14,8 @@ import Profile from './components/page/User/Profile'
 
 //context
 import { UserProvider  } from './context/UserContext'
+import AddPet from './components/page/Pet/PetAdd'
+
 
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
           <Route path="/login" element={ <Login/>} />
           <Route path="/register" element={  <Register/>} />
           <Route path="/user/profile" element={ <Profile/>}/>
+          <Route path="/pet/mypets" element={ <MyPets/>}/>
+          <Route path="/pet/add" element={ <AddPet/>}/>
           <Route path="/" element={ <Home/>}/>
         </Routes>
         </Container>

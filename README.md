@@ -29,7 +29,15 @@ $ git clone <https://github.com/Felipe118/Adopt-A-Pet.git>
 
 
 # Vá para a pasta backend e instale as dependências
+$cd backend
 $ npm install
+
+# Front-End 
+### Status
+ <h4 align="center"> 
+	🚧  ... Desapegax está 🚀 Em construção...  🚧
+</h4>
+
 
 # Execute a aplicação em modo de desenvolvimento
 $ npm start

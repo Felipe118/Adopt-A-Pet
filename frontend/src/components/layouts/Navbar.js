@@ -21,11 +21,13 @@ function Navbar() {
         </div>
         <ul className={styles.navbar}>
             <li className={styles.navbar}>
-                <Link to='/'>Adotar</Link> 
+                <Link to='/'>Adotar</Link>  
             </li>
             {
                 authenticated ? (
-                <>
+                <> <li className={styles.navbar}>
+                        <Link to='/pet/mypets'>Meus Pets</Link>
+                    </li>
                     <li className={styles.navbar}>
                         <Link to='/user/profile'>Perfil</Link>
                     </li>
