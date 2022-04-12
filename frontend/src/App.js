@@ -14,7 +14,7 @@ import Profile from './components/page/User/Profile'
 
 //context
 import { UserProvider  } from './context/UserContext'
-import AddPet from './components/page/Pet/PetAdd'
+import AddPet from './components/page/Pet/AddPet'
 
 
 function App() {
