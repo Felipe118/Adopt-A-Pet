@@ -39,10 +39,6 @@ $ npm install
 </h4>
 
 
-% # Execute a aplicação em modo de desenvolvimento
-
-
-% # O servidor inciará na porta:5000 - acesse <http://localhost:5000>
 
 ### 🛠 Tecnologias
 
